@@ -89,15 +89,18 @@ export default function OrderTracking() {
       ) : (
         /* Order Status Timeline */
         <div className="bg-secondary/20 p-8 rounded-none mb-12">
-          <div className="space-y-8 relative">
+          <div className="space-y-8 relative flex flex-col items-center">
             {/* Vertical Progress Line Background */}
-            <div className="absolute left-6 top-6 bottom-6 w-1 bg-border -translate-x-1/2" />
+            <div className="absolute left-1/2 top-6 bottom-6 w-1 bg-border -translate-x-1/2" />
             
-            {/* Vertical Progress Line Highlight */}
-            {currentStatusIndex >= 0 && (
+            {/* Vertical Progress Line Highlight (Below current icon) */}
+            {currentStatusIndex >= 0 && currentStatusIndex < statusSteps.length - 1 && (
               <div 
-                className="absolute left-6 top-6 w-1 bg-emerald-500 -translate-x-1/2 transition-all duration-500"
-                style={{ height: `${(currentStatusIndex / (statusSteps.length - 1)) * 100}%` }}
+                className="absolute left-1/2 w-1 bg-emerald-500 -translate-x-1/2 transition-all duration-500"
+                style={{ 
+                  top: `${(currentStatusIndex / (statusSteps.length - 1)) * 100 + 8}%`, 
+                  height: `${(1 / (statusSteps.length - 1)) * 100}%` 
+                }}
               />
             )}
 
@@ -109,37 +112,37 @@ export default function OrderTracking() {
               return (
                 <motion.div
                   key={step.status}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: idx * 0.1 }}
-                  className={`flex gap-6 relative z-10 p-4 transition-colors ${isCurrent ? 'bg-emerald-50' : ''}`}
+                  className="flex flex-col items-center relative z-10 w-full"
                 >
                   {/* Timeline Circle */}
-                  <div className="flex flex-col items-center">
-                    <div
-                      className={`w-12 h-12 rounded-full border-2 flex items-center justify-center transition-all ${
-                        isCompleted
-                          ? "bg-emerald-500 border-emerald-500 text-white"
+                  <div
+                    className={`w-12 h-12 rounded-full border-2 flex items-center justify-center transition-all ${
+                      isCurrent
+                        ? "bg-emerald-500 border-emerald-500 text-white shadow-lg shadow-emerald-200"
+                        : isCompleted
+                          ? "bg-black border-black text-white"
                           : "border-border bg-background text-muted-foreground"
-                      } ${isCurrent ? "ring-2 ring-emerald-500 ring-offset-2" : ""}`}
-                    >
-                      <Icon className="w-5 h-5" />
-                    </div>
+                    }`}
+                  >
+                    <Icon className="w-5 h-5" />
                   </div>
 
                   {/* Step Content */}
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
+                  <div className="text-center mt-4">
+                    <div className="flex flex-col items-center gap-1">
                       <h3 className={`font-bold text-lg ${isCompleted ? "text-foreground" : "text-muted-foreground"}`}>
                         {step.label}
                       </h3>
                       {isCurrent && (
-                        <span className="text-[10px] bg-emerald-500 text-white px-2 py-0.5 font-bold uppercase tracking-wider">
+                        <span className="text-[10px] bg-emerald-500 text-white px-2 py-0.5 font-bold uppercase tracking-wider rounded-full">
                           CURRENT
                         </span>
                       )}
                     </div>
-                    <p className="text-sm text-muted-foreground">{step.description}</p>
+                    <p className="text-sm text-muted-foreground max-w-xs">{step.description}</p>
                   </div>
                 </motion.div>
               );

@@ -63,15 +63,15 @@ export default function Profile() {
           ) : (
             <div className="space-y-4">
               {orders.map((order) => (
-                <div key={order.id} className={`border border-border p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 hover:border-black transition-colors ${
+                <div key={order.id} className={`border border-border p-6 flex flex-row justify-between items-center gap-4 hover:border-black transition-colors ${
                   order.status === 'paid' ? 'bg-emerald-50/30' : 
                   order.status === 'cancelled' ? 'bg-red-50/30' : 
                   'bg-secondary/10'
                 }`}>
-                  <div className="w-full">
-                    <div className="flex items-center gap-3 mb-2">
-                      <span className="font-bold">Order #{order.id}</span>
-                      <span className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded-sm ${
+                  <div className="flex flex-row items-center gap-4 flex-1">
+                    <div className="flex items-center gap-3 shrink-0">
+                      <span className="font-bold whitespace-nowrap">Order #{order.id}</span>
+                      <span className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded-sm whitespace-nowrap ${
                         order.status === 'delivered' ? 'bg-green-100 text-green-800' :
                         order.status === 'shipped' ? 'bg-blue-100 text-blue-800' :
                         order.status === 'processing' ? 'bg-yellow-100 text-yellow-800' :
@@ -83,14 +83,14 @@ export default function Profile() {
                       </span>
                     </div>
 
-                    <p className="text-xs text-muted-foreground mt-4">
+                    <p className="hidden sm:block text-xs text-muted-foreground whitespace-nowrap">
                       Placed on {new Date(order.createdAt!).toLocaleDateString()}
                     </p>
                   </div>
                   
-                  <div className="flex items-center gap-8 w-full md:w-auto justify-between md:justify-end">
-                    <span className="font-medium">₹{Number(order.totalAmount).toFixed(2)}</span>
-                    <Link href={`/orders/${order.id}`} className="text-sm font-bold border-b border-black pb-0.5 hover:opacity-60">
+                  <div className="flex items-center gap-8 shrink-0">
+                    <span className="font-medium whitespace-nowrap">₹{Number(order.totalAmount).toFixed(2)}</span>
+                    <Link href={`/orders/${order.id}`} className="text-sm font-bold border-b border-black pb-0.5 hover:opacity-60 whitespace-nowrap">
                       TRACK ORDER
                     </Link>
                   </div>
