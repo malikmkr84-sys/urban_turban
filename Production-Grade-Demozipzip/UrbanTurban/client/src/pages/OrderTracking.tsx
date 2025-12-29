@@ -152,7 +152,7 @@ export default function OrderTracking() {
             {order.items?.map((item: any) => (
               <div key={item.id} className="flex justify-between">
                 <span className="text-muted-foreground">{item.quantity}x {item.variant?.product?.name || 'Product'} ({item.variant?.color || 'Original'})</span>
-                <span className="font-medium">₹{Number(item.priceAtPurchase || 0).toFixed(2)}</span>
+                <span className="font-medium">₹{Number(item.variant?.product?.price || 0).toFixed(2)}</span>
               </div>
             ))}
             <div className="pt-3 border-t border-border flex justify-between font-bold">

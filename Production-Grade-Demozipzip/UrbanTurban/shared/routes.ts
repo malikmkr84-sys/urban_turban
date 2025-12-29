@@ -3,7 +3,7 @@ import { insertUserSchema, insertCartItemSchema } from "./schema";
 
 // Type definitions for API requests
 export type CheckoutRequest = {
-  paymentProvider: "upi_mock" | "razorpay_mock" | "stripe_mock";
+  paymentProvider: "upi_mock" | "razorpay_mock" | "stripe_mock" | "cod";
 };
 
 // Shared Error Schemas
