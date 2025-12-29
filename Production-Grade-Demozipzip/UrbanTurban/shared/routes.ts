@@ -127,7 +127,7 @@ export const api = {
       method: 'POST' as const,
       path: '/api/orders',
       input: z.object({
-        paymentProvider: z.enum(["upi_mock", "razorpay_mock", "stripe_mock"]),
+        paymentProvider: z.enum(["upi_mock", "razorpay_mock", "stripe_mock", "cod"]),
       }),
       responses: {
         201: z.any(), // OrderResponse

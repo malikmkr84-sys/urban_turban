@@ -221,7 +221,7 @@ export async function registerRoutes(
         userId: req.user.id,
         totalAmount: totalAmount.toString(),
         paymentProvider,
-        status: paymentProvider === "cod" ? "pending" : "paid"
+        status: "pending"
       });
 
       // Create Order Items
