@@ -2,7 +2,7 @@
 
 ## Overview
 
-UrbanTurban is a premium e-commerce platform for minimalist headwear. It's a full-stack TypeScript application with a React frontend and Express backend, featuring user authentication, product catalog with variants, shopping cart (supports guest and authenticated users), checkout with mock payment providers, and order tracking.
+UrbanTurban is a premium e-commerce platform for minimalist headwear. It's a full-stack TypeScript application with a React frontend and Express backend, featuring user authentication, product catalog with variants, shopping cart (guest and authenticated), checkout with mock payment providers, and order tracking.
 
 ## User Preferences
 
@@ -45,41 +45,33 @@ Tables include:
 - `payments` - Payment records for orders
 
 ### Development vs Production
-- Development: Vite dev server with HMR integrated into Express via `server/vite.ts`
-- Production: Static file serving from built `dist/public` directory via `server/static.ts`
+- Development: Vite dev server with HMR integrated into Express
+- Production: Static file serving from built `dist/public` directory
 
 ### Key Design Decisions
-
-1. **Typed API Contracts**: All API endpoints are defined with Zod schemas in `shared/routes.ts`, enabling type-safe requests and responses across frontend and backend.
-
-2. **Storage Abstraction**: Database operations are abstracted through an `IStorage` interface in `server/storage.ts`, making it easier to test and potentially swap storage implementations.
-
-3. **Guest Cart Support**: Carts can exist without a user ID, allowing guest checkout. Carts are assigned to users upon authentication.
-
-4. **Product Variants**: Products have multiple color variants with separate stock tracking, enabling inventory management per variant.
+1. **Shared type definitions**: Both frontend and backend consume the same Zod schemas, ensuring type safety across the stack
+2. **Storage abstraction**: Database operations are abstracted through an interface, making it easier to test or swap implementations
+3. **Guest cart support**: Carts can exist without a user, allowing anonymous shopping that merges on login
+4. **Mock payment providers**: Checkout supports multiple mock payment methods (UPI, Razorpay, Stripe) for demo purposes
 
 ## External Dependencies
 
 ### Database
 - **PostgreSQL**: Primary database, connection via `DATABASE_URL` environment variable
-- **Drizzle ORM**: Schema defined in `shared/schema.ts`, migrations in `./migrations`
-
-### Authentication
-- **Passport.js**: Local strategy for email/password authentication
-- **express-session**: Session management with `connect-pg-simple` for PostgreSQL session storage
-- **SESSION_SECRET**: Environment variable required for session encryption
-
-### Frontend Libraries
-- **@tanstack/react-query**: Server state management and caching
-- **Framer Motion**: Animation library for transitions
-- **shadcn/ui**: UI component library built on Radix UI primitives
-- **Wouter**: Lightweight React router
-
-### Build & Development
-- **Vite**: Frontend build tool with HMR support
-- **tsx**: TypeScript execution for development server
-- **Drizzle Kit**: Database schema management (`npm run db:push`)
+- **Drizzle ORM**: Schema management and queries
+- **connect-pg-simple**: Session storage in PostgreSQL
 
 ### Environment Variables Required
 - `DATABASE_URL`: PostgreSQL connection string
-- `SESSION_SECRET`: Secret for session encryption (defaults to "urban-turban-secret" in development)
+- `SESSION_SECRET`: Secret for session encryption (falls back to default in development)
+
+### Third-Party Libraries
+- **Radix UI**: Headless UI primitives for accessible components
+- **Framer Motion**: Animation library
+- **TanStack React Query**: Server state management
+- **Passport.js**: Authentication middleware
+
+### Build & Development
+- **Vite**: Frontend build tool with HMR
+- **tsx**: TypeScript execution for development
+- **Drizzle Kit**: Database migrations (`npm run db:push`)

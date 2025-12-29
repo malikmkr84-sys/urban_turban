@@ -82,9 +82,6 @@ export default function Profile() {
                         {order.status}
                       </span>
                     </div>
-                    
-                    {/* Status Progress Bar */}
-                    <OrderStatusProgress status={order.status} />
 
                     <p className="text-xs text-muted-foreground mt-4">
                       Placed on {new Date(order.createdAt!).toLocaleDateString()}
@@ -102,46 +99,6 @@ export default function Profile() {
             </div>
           )}
         </div>
-      </div>
-    </div>
-  );
-}
-
-function OrderStatusProgress({ status }: { status: string }) {
-  const queryClient = useQueryClient();
-  const statuses = ['pending', 'paid', 'processing', 'shipped', 'delivered'];
-  const currentIdx = status === 'cancelled' ? -1 : statuses.indexOf(status);
-
-  useEffect(() => {
-    if (status !== 'delivered' && status !== 'cancelled') {
-      const timer = setTimeout(() => {
-        queryClient.invalidateQueries({ queryKey: [api.orders.list.path] });
-      }, 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [status, queryClient]);
-
-  return (
-    <div className="mt-4 w-full max-w-md">
-      <div className="flex items-center w-full">
-        {['placed', 'processing', 'shipped', 'delivered'].map((step, idx) => {
-          const isCompleted = idx <= currentIdx;
-          const isLast = idx === 3;
-          
-          return (
-            <div key={step} className="flex items-center flex-1 last:flex-none">
-              <div className={`w-2 h-2 rounded-full ${isCompleted ? 'bg-black' : 'bg-gray-200'}`} />
-              {!isLast && <div className={`h-0.5 flex-1 mx-1 ${isCompleted ? 'bg-black' : 'bg-gray-200'}`} />}
-            </div>
-          );
-        })}
-        {status === 'cancelled' && <div className="text-[10px] text-red-600 font-bold ml-2">CANCELLED</div>}
-      </div>
-      <div className="flex justify-between w-full text-[8px] uppercase tracking-tighter text-muted-foreground mt-1">
-        <span>Placed</span>
-        <span>Processing</span>
-        <span>Shipped</span>
-        <span>Delivered</span>
       </div>
     </div>
   );
