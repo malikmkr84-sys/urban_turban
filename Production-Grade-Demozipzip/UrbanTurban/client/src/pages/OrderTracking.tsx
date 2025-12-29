@@ -39,16 +39,15 @@ export default function OrderTracking() {
     return <div className="min-h-screen pt-32 text-center">Order not found</div>;
   }
 
-  const statuses = ["placed", "processing", "shipped", "out_for_delivery", "delivered"];
-  const currentStatusIndex = statuses.indexOf(order.status.toLowerCase());
-
   const statusSteps = [
     { status: "placed", label: "Order Placed", icon: CheckCircle2, description: "Your order has been confirmed" },
-    { status: "paid", label: "Paid", icon: CheckCircle2, description: "Payment successful" },
     { status: "processing", label: "Processing", icon: Package, description: "We're preparing your items" },
     { status: "shipped", label: "Shipped", icon: Truck, description: "Your package is on its way" },
     { status: "delivered", label: "Delivered", icon: CheckCircle2, description: "Order received successfully" },
   ];
+
+  const currentStatusIndex = statusSteps.findIndex(s => s.status === order.status.toLowerCase());
+  const displayStatusIndex = currentStatusIndex === -1 ? (order.status === "paid" ? 0 : -1) : currentStatusIndex;
 
   return (
     <div className="min-h-screen pt-32 pb-24 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -61,7 +60,7 @@ export default function OrderTracking() {
           <h1 className="font-display text-4xl mb-2">Order Tracking</h1>
           <p className="text-muted-foreground">Order #{order.id}</p>
         </div>
-        {["pending", "paid"].includes(order.status) && (
+        {["pending", "paid", "processing"].includes(order.status) && (
           <button
             onClick={() => cancelOrderMutation.mutate("User requested cancellation")}
             disabled={cancelOrderMutation.isPending}
@@ -92,8 +91,8 @@ export default function OrderTracking() {
           <div className="space-y-8">
             {statusSteps.map((step, idx) => {
               const Icon = step.icon;
-              const isCompleted = idx <= currentStatusIndex;
-              const isCurrent = idx === currentStatusIndex;
+              const isCompleted = idx <= displayStatusIndex;
+              const isCurrent = idx === displayStatusIndex;
 
               return (
                 <motion.div
@@ -117,7 +116,7 @@ export default function OrderTracking() {
                     {idx < statusSteps.length - 1 && (
                       <div
                         className={`w-1 h-12 mt-2 ${
-                          isCompleted && idx < currentStatusIndex ? "bg-primary" : "bg-border"
+                          isCompleted && idx < displayStatusIndex ? "bg-primary" : "bg-border"
                         }`}
                       />
                     )}
@@ -149,15 +148,15 @@ export default function OrderTracking() {
         <div className="border border-border p-6">
           <h2 className="font-bold text-sm uppercase tracking-wide mb-4">Order Summary</h2>
           <div className="space-y-3 text-sm">
-            {order.items.map((item) => (
+            {order.items?.map((item: any) => (
               <div key={item.id} className="flex justify-between">
-                <span className="text-muted-foreground">{item.quantity}x Product</span>
-                <span className="font-medium">₹{(Number(item.priceAtPurchase) * item.quantity).toFixed(2)}</span>
+                <span className="text-muted-foreground">{item.quantity}x {item.variant?.product?.name || 'Product'}</span>
+                <span className="font-medium">₹{(Number(item.priceAtPurchase || 0) * (item.quantity || 0)).toFixed(2)}</span>
               </div>
             ))}
             <div className="pt-3 border-t border-border flex justify-between font-bold">
               <span>Total</span>
-              <span>₹{Number(order.totalAmount).toFixed(2)}</span>
+              <span>₹{Number(order.totalAmount || 0).toFixed(2)}</span>
             </div>
           </div>
         </div>

@@ -52,9 +52,9 @@ export const cartItems = pgTable("cart_items", {
 export const orders = pgTable("orders", {
   id: serial("id").primaryKey(),
   userId: integer("user_id").notNull().references(() => users.id),
-  status: text("status").notNull().default("pending"), // pending, paid, shipped, delivered, cancelled, refunded
+  status: text("status").notNull().default("pending"), // pending, paid, processing, shipped, delivered, cancelled, refunded
   totalAmount: decimal("total_amount", { precision: 10, scale: 2 }).notNull(),
-  paymentProvider: text("payment_provider").notNull(), // razorpay_mock, stripe_mock
+  paymentProvider: text("payment_provider").notNull(), // cod, upi_mock, razorpay_mock, stripe_mock
   trackingNumber: text("tracking_number"),
   cancellationReason: text("cancellation_reason"),
   refundStatus: text("refund_status"), // none, processing, completed

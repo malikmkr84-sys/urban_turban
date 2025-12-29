@@ -287,8 +287,8 @@ export async function registerRoutes(
       return res.status(404).json({ message: "Order not found" });
     }
 
-    // Only allow cancellation for pending or paid states
-    if (!["pending", "paid"].includes(order.status)) {
+    // Only allow cancellation for pending, paid, or processing states
+    if (!["pending", "paid", "processing"].includes(order.status)) {
       return res.status(400).json({ message: "Order cannot be cancelled in its current state" });
     }
 
