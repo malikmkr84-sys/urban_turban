@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sans: 'DM Sans', sans-serif;
+  --font-display: 'Playfair Display', serif;
+
+  /* Premium Minimalist Palette */
+  /* Off-White Background */
+  --background: 40 20% 97%; 
+  /* Soft Black Foreground */
+  --foreground: 0 0% 10%;
+  
+  /* Olive Green - Primary Accent */
+  --primary: 85 25% 35%;
+  --primary-foreground: 40 20% 97%;
+  
+  /* Beige/Sand - Secondary */
+  --secondary: 40 20% 92%;
+  --secondary-foreground: 0 0% 10%;
+  
+  /* Soft Muted Text */
+  --muted: 40 10% 94%;
+  --muted-foreground: 0 0% 40%;
+  
+  /* Warm Accent (Terracotta-ish for calls to action if needed, or keeping it monochrome) */
+  --accent: 40 20% 92%;
+  --accent-foreground: 85 25% 35%;
+  
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 98%;
+  
+  --border: 0 0% 90%;
+  --input: 0 0% 90%;
+  --ring: 85 25% 35%;
+  
+  --radius: 0rem; /* Sharp corners for minimalist editorial look */
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground antialiased selection:bg-primary/20 selection:text-primary;
+    font-family: var(--font-sans);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    @apply font-medium tracking-tight;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
