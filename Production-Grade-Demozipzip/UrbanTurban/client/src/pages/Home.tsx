@@ -71,9 +71,32 @@ export default function Home() {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-y-12 gap-x-8">
-            {featured.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
+            {/* Displaying Black, Beige, and Olive variants as separate cards */}
+            {featured.length > 0 && (
+              <>
+                <ProductCard 
+                  product={{
+                    ...featured[0],
+                    name: "The Urban Essential (Black)",
+                    images: [featured[0].images[0]]
+                  }} 
+                />
+                <ProductCard 
+                  product={{
+                    ...featured[0],
+                    name: "The Urban Essential (Beige)",
+                    images: [featured[0].images[1] || featured[0].images[0]]
+                  }} 
+                />
+                <ProductCard 
+                  product={{
+                    ...featured[0],
+                    name: "The Urban Essential (Olive)",
+                    images: [featured[0].images[2] || featured[0].images[0]]
+                  }} 
+                />
+              </>
+            )}
           </div>
         )}
         
