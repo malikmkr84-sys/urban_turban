@@ -243,7 +243,11 @@ export class DatabaseStorage implements IStorage {
       price: "799.00",
       description: "A minimalist dad cap designed for the modern urban explorer. Crafted from 100% premium cotton twill with an adjustable strap.",
       microStory: "Inspired by the concrete jungle, built for comfort. The Urban Essential isn't just a cap; it's a statement of calm confidence amidst the chaos.",
-      images: ["https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&q=80&w=800"],
+      images: [
+        "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&q=80&w=800",
+        "https://images.unsplash.com/photo-1576871333021-d022e585958b?auto=format&fit=crop&q=80&w=800",
+        "https://images.unsplash.com/photo-1521369909029-2afed882baee?auto=format&fit=crop&q=80&w=800"
+      ],
       isActive: true
     }).returning();
 
