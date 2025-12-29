@@ -23,27 +23,33 @@ export default function Profile() {
 
   return (
     <div className="min-h-screen pt-32 pb-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 border-b border-border pb-6">
-        <div>
-          <h1 className="font-display text-4xl mb-2">My Account</h1>
-          <p className="text-muted-foreground">Welcome back, {user.name}</p>
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 border-b border-border pb-6 gap-4">
+        <div className="w-full">
+          <h1 className="font-display text-3xl md:text-4xl mb-2">My Account</h1>
+          <p className="text-sm md:text-base text-muted-foreground">Welcome back, {user.name}</p>
         </div>
         <button 
           onClick={() => logout()}
-          className="mt-4 md:mt-0 px-6 py-2 border border-border hover:border-destructive hover:text-destructive transition-colors text-sm font-bold uppercase tracking-wide"
+          className="w-full md:w-auto px-6 py-3 md:py-2 border border-border hover:border-destructive hover:text-destructive transition-colors text-xs font-bold uppercase tracking-widest"
         >
           Sign Out
         </button>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 md:gap-12">
         {/* Sidebar info */}
         <div className="lg:col-span-1 space-y-8">
           <div>
-            <h3 className="font-bold text-sm uppercase tracking-wide mb-4">Account Details</h3>
-            <div className="p-4 bg-secondary/20 text-sm space-y-2">
-              <p><span className="text-muted-foreground block text-xs">Email</span> {user.email}</p>
-              <p><span className="text-muted-foreground block text-xs">Member since</span> {new Date().getFullYear()}</p>
+            <h3 className="font-bold text-xs uppercase tracking-widest mb-4 opacity-70">Account Details</h3>
+            <div className="p-5 bg-secondary/20 text-sm space-y-4">
+              <div>
+                <span className="text-muted-foreground block text-[10px] uppercase font-bold tracking-tight mb-1">Email</span>
+                <span className="break-all font-medium">{user.email}</span>
+              </div>
+              <div>
+                <span className="text-muted-foreground block text-[10px] uppercase font-bold tracking-tight mb-1">Member since</span>
+                <span className="font-medium">{new Date().getFullYear()}</span>
+              </div>
             </div>
           </div>
         </div>
@@ -55,22 +61,22 @@ export default function Profile() {
           {isOrdersLoading ? (
             <div className="flex justify-center py-12"><Loader2 className="w-6 h-6 animate-spin text-muted-foreground" /></div>
           ) : !orders || orders.length === 0 ? (
-             <div className="text-center py-16 bg-secondary/10 border border-dashed border-border">
+             <div className="text-center py-16 bg-secondary/10 border border-dashed border-border px-4">
                <Package className="w-12 h-12 mx-auto text-muted-foreground mb-4 opacity-50" />
-               <p className="text-muted-foreground mb-4">You haven't placed any orders yet.</p>
-               <Link href="/shop" className="text-primary font-bold hover:underline">Start Shopping</Link>
+               <p className="text-muted-foreground mb-4 text-sm">You haven't placed any orders yet.</p>
+               <Link href="/shop" className="text-primary font-bold hover:underline text-sm">Start Shopping</Link>
              </div>
           ) : (
             <div className="space-y-4">
               {orders.map((order) => (
-                <div key={order.id} className={`border border-border p-6 flex flex-row justify-between items-center gap-4 hover:border-black transition-colors ${
+                <div key={order.id} className={`border border-border p-4 md:p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 hover:border-black transition-colors ${
                   order.status === 'paid' ? 'bg-emerald-50/30' : 
                   order.status === 'cancelled' ? 'bg-red-50/30' : 
                   'bg-secondary/10'
                 }`}>
-                  <div className="flex flex-row items-center gap-4 flex-1">
-                    <div className="flex items-center gap-3 shrink-0">
-                      <span className="font-bold whitespace-nowrap">Order #{order.id}</span>
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 md:gap-4 flex-1 w-full">
+                    <div className="flex items-center justify-between sm:justify-start gap-3 w-full sm:w-auto">
+                      <span className="font-bold text-sm md:text-base">Order #{order.id}</span>
                       <span className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded-sm whitespace-nowrap ${
                         order.status === 'delivered' ? 'bg-green-100 text-green-800' :
                         order.status === 'shipped' ? 'bg-blue-100 text-blue-800' :
@@ -83,15 +89,15 @@ export default function Profile() {
                       </span>
                     </div>
 
-                    <p className="hidden sm:block text-xs text-muted-foreground whitespace-nowrap">
-                      Placed on {new Date(order.createdAt!).toLocaleDateString()}
+                    <p className="text-[10px] md:text-xs text-muted-foreground uppercase tracking-widest font-medium">
+                      {new Date(order.createdAt!).toLocaleDateString(undefined, { dateStyle: 'medium' })}
                     </p>
                   </div>
                   
-                  <div className="flex items-center gap-8 shrink-0">
-                    <span className="font-medium whitespace-nowrap">₹{Number(order.totalAmount).toFixed(2)}</span>
-                    <Link href={`/orders/${order.id}`} className="text-sm font-bold border-b border-black pb-0.5 hover:opacity-60 whitespace-nowrap">
-                      TRACK ORDER
+                  <div className="flex items-center justify-between sm:justify-end gap-6 md:gap-8 w-full sm:w-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-border">
+                    <span className="font-bold text-sm md:text-base">₹{Number(order.totalAmount).toFixed(2)}</span>
+                    <Link href={`/orders/${order.id}`} className="text-xs font-bold border-b border-black pb-0.5 hover:opacity-60 uppercase tracking-widest">
+                      Track
                     </Link>
                   </div>
                 </div>

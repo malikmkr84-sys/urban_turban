@@ -20,9 +20,32 @@ export default function Shop() {
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-8">
-          {products?.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
+          {/* Displaying exactly 3 variants matching Home page */}
+          {products && products.length > 0 && (
+            <>
+              <ProductCard 
+                product={{
+                  ...products[0],
+                  name: "The Urban Essential (Black)",
+                  images: [products[0].images[0]]
+                }} 
+              />
+              <ProductCard 
+                product={{
+                  ...products[0],
+                  name: "The Urban Essential (Beige)",
+                  images: [products[0].images[1] || products[0].images[0]]
+                }} 
+              />
+              <ProductCard 
+                product={{
+                  ...products[0],
+                  name: "The Urban Essential (Olive)",
+                  images: [products[0].images[2] || products[0].images[0]]
+                }} 
+              />
+            </>
+          )}
         </div>
       )}
       
