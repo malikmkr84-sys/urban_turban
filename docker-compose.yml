@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  # Database Service
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
+      POSTGRES_DB: ${POSTGRES_DB:-urbanturban}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-user}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend Service
+  backend:
+    build: 
+      context: ./backend-python
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-user}:${POSTGRES_PASSWORD:-password}@db:5432/${POSTGRES_DB:-urbanturban}
+      SESSION_SECRET: ${SESSION_SECRET:-urban-turban-secret}
+      PORT: 5000
+      HOST: 0.0.0.0
+      ENVIRONMENT: ${ENVIRONMENT:-production}
+      # CORS settings if needed defined in backend
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # Frontend Service
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      # If the frontend needs to talk to backend during build or runtime (for proxy)
+      VITE_API_URL: http://backend:5000
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
