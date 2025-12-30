@@ -1,14 +1,14 @@
 import { useRoute, Link } from "wouter";
 import { useOrder } from "@/hooks/use-orders";
-import { Loader2, CheckCircle2, Package, Truck, MapPin, Clock } from "lucide-react";
+import { Loader2, CheckCircle2, Package, Truck, Clock } from "lucide-react";
 import { motion } from "framer-motion";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { api } from "@shared/routes";
 
 export default function OrderTracking() {
-  const [, params] = useRoute("/orders/:id");
-  const id = parseInt(params?.id || "0");
+  const [, params] = useRoute<{ id: string }>("/orders/:id");
+  const id = params ? parseInt(params.id) : 0;
   const queryClient = useQueryClient();
   const { toast } = useToast();
 
