@@ -79,11 +79,12 @@ export default function OrderTracking() {
             <Clock className="w-6 h-6" />
             <h3 className="font-bold text-lg">Order Cancelled</h3>
           </div>
-          <p className="text-sm text-muted-foreground mb-4">{order.cancellationReason}</p>
-          {order.refundStatus && order.refundStatus !== "none" && (
+          <p className="text-sm text-muted-foreground mb-4">{order.cancellation_reason
+          }</p>
+          {order.refund_status && order.refund_status !== "none" && (
             <div className="pt-4 border-t border-destructive/10">
               <span className="text-xs font-bold uppercase tracking-widest opacity-60 block mb-1">Refund Status</span>
-              <span className="font-bold text-destructive uppercase">{order.refundStatus}</span>
+              <span className="font-bold text-destructive uppercase">{order.refund_status}</span>
             </div>
           )}
         </div>
@@ -108,8 +109,8 @@ export default function OrderTracking() {
                   <div className="flex flex-col items-center">
                     <div
                       className={`w-12 h-12 rounded-full border-2 flex items-center justify-center transition-all ${isCompleted
-                          ? "bg-primary border-primary text-primary-foreground"
-                          : "border-border bg-background text-muted-foreground"
+                        ? "bg-primary border-primary text-primary-foreground"
+                        : "border-border bg-background text-muted-foreground"
                         } ${isCurrent ? "ring-2 ring-primary ring-offset-2" : ""}`}
                     >
                       <Icon className="w-5 h-5" />
@@ -178,7 +179,7 @@ export default function OrderTracking() {
         <div className="space-y-3 text-sm">
           <div className="flex justify-between">
             <span className="text-muted-foreground">Payment Method</span>
-            <span className="font-medium capitalize">{order.paymentProvider === "upi_mock" ? "UPI" : order.paymentProvider === "cod" ? "COD" : "Razorpay"}</span>
+            <span className="font-medium capitalize">{order.payment_provider === "upi_mock" ? "UPI" : order.payment_provider === "cod" ? "COD" : "Razorpay"}</span>
           </div>
           <div className="flex justify-between">
             <span className="text-muted-foreground">Status</span>
