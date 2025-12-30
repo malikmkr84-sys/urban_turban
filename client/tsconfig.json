@@ -26,11 +26,15 @@
       ],
       "@shared/*": [
         "../shared/*"
+      ],
+      "zod": [
+        "./node_modules/zod"
       ]
     }
   },
   "include": [
-    "src"
+    "src",
+    "../shared"
   ],
   "references": [
     {
