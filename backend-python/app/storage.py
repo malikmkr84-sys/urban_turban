@@ -266,9 +266,9 @@ class Storage:
                     description="A minimalist dad cap designed for the modern urban explorer. Crafted from 100% premium cotton twill with an adjustable strap.",
                     micro_story="Inspired by the concrete jungle, built for comfort. The Urban Essential isn't just a cap; it's a statement of calm confidence amidst the chaos.",
                     images=[
-                        "https://malikmkr84-sys.github.io/urban_turban/products/urban-essential-cap.jpg",
-                        "https://malikmkr84-sys.github.io/urban_turban/products/urban-essential-cap.jpg",
-                        "https://malikmkr84-sys.github.io/urban_turban/products/urban-essential-cap.jpg"
+                        "/products/urban-essential-cap.jpg",
+                        "/products/urban-essential-cap.jpg",
+                        "/products/urban-essential-cap.jpg"
                     ],
                     is_active=True
                 )

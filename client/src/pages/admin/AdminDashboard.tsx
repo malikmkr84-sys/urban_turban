@@ -282,8 +282,10 @@ function ProductsList() {
             {(products as any[] || []).map(product => (
                 <div key={product.id} className="flex items-center gap-4 p-4 border border-border">
                     <div className="h-16 w-16 bg-secondary/30 overflow-hidden">
-                        {product.images && product.images[0] && (
-                            <img src={product.images[0]} alt="" className="w-full h-full object-cover" />
+                        {product.images && product.images.length > 0 ? (
+                            <img src={product.images[0] || "/products/placeholder.jpg"} alt="" className="w-full h-full object-cover" />
+                        ) : (
+                            <img src="/products/placeholder.jpg" alt="" className="w-full h-full object-cover" />
                         )}
                     </div>
                     <div className="flex-1">

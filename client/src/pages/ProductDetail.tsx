@@ -73,7 +73,7 @@ export default function ProductDetail() {
                 key={selectedVariant?.color}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                src={product.images?.[0] || "https://placehold.co/600x800?text=No+Image"}
+                src={product.images?.[0] || "/products/placeholder.jpg"}
                 alt={product.name}
                 className="w-full h-full object-cover"
               />
