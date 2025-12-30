@@ -11,6 +11,8 @@ from app.database import engine, Base
 from app.storage import Storage
 from app.database import SessionLocal
 from app.api.routes import auth, products, cart, orders, users
+from fastapi.staticfiles import StaticFiles
+import os
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -108,6 +110,12 @@ app.include_router(products.router)
 app.include_router(cart.router)
 app.include_router(orders.router)
 app.include_router(users.router)
+
+# Mount static files
+static_path = os.path.join(os.path.dirname(__file__), "static")
+if not os.path.exists(static_path):
+    os.makedirs(static_path)
+app.mount("/static", StaticFiles(directory=static_path), name="static")
 
 
 # Root endpoint
