@@ -42,6 +42,9 @@ export const errorSchemas = {
   }),
 };
 
+export const API_BASE = import.meta.env.VITE_API_URL;
+
+
 export const api = {
   auth: {
     register: {
@@ -218,6 +221,6 @@ export function buildUrl(path: string, params?: Record<string, string | number>)
       }
     });
   }
-  return url;
+  return `${API_BASE}${url}`;
 }
 
