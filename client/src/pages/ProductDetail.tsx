@@ -69,20 +69,14 @@ export default function ProductDetail() {
           {/* Gallery */}
           <div className="space-y-4">
             <div className="aspect-[3/4] bg-secondary/30 w-full overflow-hidden">
-              {product.images && product.images.length > 0 ? (
-                <motion.img
-                  key={selectedVariant?.color} // Key change triggers animation
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  src={product.images[0]}
-                  alt={product.name}
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <div className="w-full h-full flex items-center justify-center text-muted-foreground bg-secondary">
-                  No Image
-                </div>
-              )}
+              <motion.img
+                key={selectedVariant?.color}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                src={product.images?.[0] || "https://placehold.co/600x800?text=No+Image"}
+                alt={product.name}
+                className="w-full h-full object-cover"
+              />
             </div>
             {/* Thumbnails if we had multiple images per variant, just using same array for demo */}
             <div className="grid grid-cols-4 gap-4">

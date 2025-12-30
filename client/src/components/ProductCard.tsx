@@ -8,7 +8,8 @@ interface ProductCardProps {
 
 export function ProductCard({ product }: ProductCardProps) {
   // Use first image if array exists, otherwise placeholder
-  const mainImage = product.images?.[0] || "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&q=80&w=800";
+  const PLACEHOLDER_IMAGE = "https://placehold.co/600x800?text=No+Image";
+  const mainImage = product.images?.[0] || PLACEHOLDER_IMAGE;
   const hoverImage = product.images?.[1] || mainImage;
 
   return (
